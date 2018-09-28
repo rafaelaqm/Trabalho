@@ -37,6 +37,7 @@ public class Principal extends javax.swing.JFrame {
         mnlSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestão de Autopeças");
 
         javax.swing.GroupLayout pnl_principalLayout = new javax.swing.GroupLayout(pnl_principal);
         pnl_principal.setLayout(pnl_principalLayout);
@@ -113,7 +114,6 @@ public class Principal extends javax.swing.JFrame {
         pnl_principal.removeAll();
         pnl_principal.add(cliente);
         pnl_principal.updateUI();
-        
     }//GEN-LAST:event_mnlClienteActionPerformed
 
     /**
