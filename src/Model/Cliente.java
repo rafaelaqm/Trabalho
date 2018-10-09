@@ -26,6 +26,28 @@ public class Cliente {
     private String estadoCliente;
     private String cepCliente;
 
+    public Cliente() {
+    }
+
+    public Cliente(int codigoCliente, String nomeCliente, String rgCliente, String cpfCliente, String sexoCliente, String telefoneCliente, String emailCliente, String ruaCliente, String numeroCliente, String complementoCliente, String bairroCliente, String cidadeCliente, String estadoCliente, String cepCliente) {
+        this.codigoCliente = codigoCliente;
+        this.nomeCliente = nomeCliente;
+        this.rgCliente = rgCliente;
+        this.cpfCliente = cpfCliente;
+        this.sexoCliente = sexoCliente;
+        this.telefoneCliente = telefoneCliente;
+        this.emailCliente = emailCliente;
+        this.ruaCliente = ruaCliente;
+        this.numeroCliente = numeroCliente;
+        this.complementoCliente = complementoCliente;
+        this.bairroCliente = bairroCliente;
+        this.cidadeCliente = cidadeCliente;
+        this.estadoCliente = estadoCliente;
+        this.cepCliente = cepCliente;
+    }
+
+    
+    
     public int getCodigoCliente() {
         return codigoCliente;
     }

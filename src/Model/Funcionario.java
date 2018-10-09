@@ -28,6 +28,29 @@ public class Funcionario {
     private String estadoFuncionario;
     private String cepFuncionario;
 
+    public Funcionario() {
+    }
+
+    public Funcionario(int codigoFuncionario, String funcaoFuncionario, String salarioFuncionario, String nomeFuncionario, String rgFuncionario, String cpfFuncionario, String sexoFuncionario, String telefoneFuncionario, String emailFuncionario, String ruaFuncionario, String numeroFuncionario, String complementoFuncionario, String bairroFuncionario, String cidadeFuncionario, String estadoFuncionario, String cepFuncionario) {
+        this.codigoFuncionario = codigoFuncionario;
+        this.funcaoFuncionario = funcaoFuncionario;
+        this.salarioFuncionario = salarioFuncionario;
+        this.nomeFuncionario = nomeFuncionario;
+        this.rgFuncionario = rgFuncionario;
+        this.cpfFuncionario = cpfFuncionario;
+        this.sexoFuncionario = sexoFuncionario;
+        this.telefoneFuncionario = telefoneFuncionario;
+        this.emailFuncionario = emailFuncionario;
+        this.ruaFuncionario = ruaFuncionario;
+        this.numeroFuncionario = numeroFuncionario;
+        this.complementoFuncionario = complementoFuncionario;
+        this.bairroFuncionario = bairroFuncionario;
+        this.cidadeFuncionario = cidadeFuncionario;
+        this.estadoFuncionario = estadoFuncionario;
+        this.cepFuncionario = cepFuncionario;
+    }
+    
+ 
     public int getCodigoFuncionario() {
         return codigoFuncionario;
     }
