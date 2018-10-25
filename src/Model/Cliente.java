@@ -7,158 +7,164 @@ package Model;
 
 /**
  *
- * @author User
+ * @author wyss2
  */
 public class Cliente {
-    
-    private int codigoCliente;
-    private String nomeCliente;
-    private String rgCliente;
-    private String cpfCliente;
-    private String sexoCliente;
-    private String telefoneCliente;
-    private String emailCliente;
-    private String ruaCliente;
-    private String numeroCliente;
-    private String complementoCliente;
-    private String bairroCliente;
-    private String cidadeCliente;
-    private String estadoCliente;
-    private String cepCliente;
+    private int Codigo;
+    private String Nome;
+    private String Rg;
+    private String Cpf;
+    private String Sexo;
+    private String Telefone;
+    private String Email;
+    private String Rua;
+    private String Numero;
+    private String Complemento;
+    private String Bairro;
+    private String Cidade;
+    private String Estado;
+    private String Cep;
+
+    public Cliente(String Nome, String Telefone, String Email) {
+        this.Nome = Nome;
+        this.Telefone = Telefone;
+        this.Email = Email;
+    }
+
+    public Cliente(int Codigo, String Nome, String Rg, String Cpf, String Sexo, String Telefone, String Email, String Rua, String Numero, String Complemento, String Bairro, String Cidade, String Estado, String Cep) {
+        this.Codigo = Codigo;
+        this.Nome = Nome;
+        this.Rg = Rg;
+        this.Cpf = Cpf;
+        this.Sexo = Sexo;
+        this.Telefone = Telefone;
+        this.Email = Email;
+        this.Rua = Rua;
+        this.Numero = Numero;
+        this.Complemento = Complemento;
+        this.Bairro = Bairro;
+        this.Cidade = Cidade;
+        this.Estado = Estado;
+        this.Cep = Cep;
+    }
 
     public Cliente() {
     }
 
-    public Cliente(int codigoCliente, String nomeCliente, String rgCliente, String cpfCliente, String sexoCliente, String telefoneCliente, String emailCliente, String ruaCliente, String numeroCliente, String complementoCliente, String bairroCliente, String cidadeCliente, String estadoCliente, String cepCliente) {
-        this.codigoCliente = codigoCliente;
-        this.nomeCliente = nomeCliente;
-        this.rgCliente = rgCliente;
-        this.cpfCliente = cpfCliente;
-        this.sexoCliente = sexoCliente;
-        this.telefoneCliente = telefoneCliente;
-        this.emailCliente = emailCliente;
-        this.ruaCliente = ruaCliente;
-        this.numeroCliente = numeroCliente;
-        this.complementoCliente = complementoCliente;
-        this.bairroCliente = bairroCliente;
-        this.cidadeCliente = cidadeCliente;
-        this.estadoCliente = estadoCliente;
-        this.cepCliente = cepCliente;
+    public Cliente(int aInt, String string, String string0, String string1, String string2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
-    public int getCodigoCliente() {
-        return codigoCliente;
+    public int getCodigo() {
+        return Codigo;
     }
 
-    public void setCodigoCliente(int codigoCliente) {
-        this.codigoCliente = codigoCliente;
+    public void setCodigo(int Codigo) {
+        this.Codigo = Codigo;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public String getNome() {
+        return Nome;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public void setNome(String Nome) {
+        this.Nome = Nome;
     }
 
-    public String getRgCliente() {
-        return rgCliente;
+    public String getRg() {
+        return Rg;
     }
 
-    public void setRgCliente(String rgCliente) {
-        this.rgCliente = rgCliente;
+    public void setRg(String Rg) {
+        this.Rg = Rg;
     }
 
-    public String getCpfCliente() {
-        return cpfCliente;
+    public String getCpf() {
+        return Cpf;
     }
 
-    public void setCpfCliente(String cpfCliente) {
-        this.cpfCliente = cpfCliente;
+    public void setCpf(String Cpf) {
+        this.Cpf = Cpf;
     }
 
-    public String getSexoCliente() {
-        return sexoCliente;
+    public String getSexo() {
+        return Sexo;
     }
 
-    public void setSexoCliente(String sexoCliente) {
-        this.sexoCliente = sexoCliente;
+    public void setSexo(String Sexo) {
+        this.Sexo = Sexo;
     }
 
-    public String getTelefoneCliente() {
-        return telefoneCliente;
+    public String getTelefone() {
+        return Telefone;
     }
 
-    public void setTelefoneCliente(String telefoneCliente) {
-        this.telefoneCliente = telefoneCliente;
+    public void setTelefone(String Telefone) {
+        this.Telefone = Telefone;
     }
 
-    public String getEmailCliente() {
-        return emailCliente;
+    public String getEmail() {
+        return Email;
     }
 
-    public void setEmailCliente(String emailCliente) {
-        this.emailCliente = emailCliente;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
-    public String getRuaCliente() {
-        return ruaCliente;
+    public String getRua() {
+        return Rua;
     }
 
-    public void setRuaCliente(String ruaCliente) {
-        this.ruaCliente = ruaCliente;
+    public void setRua(String Rua) {
+        this.Rua = Rua;
     }
 
-    public String getNumeroCliente() {
-        return numeroCliente;
+    public String getNumero() {
+        return Numero;
     }
 
-    public void setNumeroCliente(String numeroCliente) {
-        this.numeroCliente = numeroCliente;
+    public void setNumero(String Numero) {
+        this.Numero = Numero;
     }
 
-    public String getComplementoCliente() {
-        return complementoCliente;
+    public String getComplemento() {
+        return Complemento;
     }
 
-    public void setComplementoCliente(String complementoCliente) {
-        this.complementoCliente = complementoCliente;
+    public void setComplemento(String Complemento) {
+        this.Complemento = Complemento;
     }
 
-    public String getBairroCliente() {
-        return bairroCliente;
+    public String getBairro() {
+        return Bairro;
     }
 
-    public void setBairroCliente(String bairroCliente) {
-        this.bairroCliente = bairroCliente;
+    public void setBairro(String Bairro) {
+        this.Bairro = Bairro;
     }
 
-    public String getCidadeCliente() {
-        return cidadeCliente;
+    public String getCidade() {
+        return Cidade;
     }
 
-    public void setCidadeCliente(String cidadeCliente) {
-        this.cidadeCliente = cidadeCliente;
+    public void setCidade(String Cidade) {
+        this.Cidade = Cidade;
     }
 
-    public String getEstadoCliente() {
-        return estadoCliente;
+    public String getEstado() {
+        return Estado;
     }
 
-    public void setEstadoCliente(String estadoCliente) {
-        this.estadoCliente = estadoCliente;
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
     }
 
-    public String getCepCliente() {
-        return cepCliente;
+    public String getCep() {
+        return Cep;
     }
 
-    public void setCepCliente(String cepCliente) {
-        this.cepCliente = cepCliente;
+    public void setCep(String Cep) {
+        this.Cep = Cep;
     }
 
-    
 }

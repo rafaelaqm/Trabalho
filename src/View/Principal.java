@@ -99,10 +99,10 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnlFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlFuncionarioActionPerformed
-        FuncionarioView funcionario = new FuncionarioView();
+        /*FuncionarioView funcionario = new FuncionarioView();
         pnl_principal.removeAll();
         pnl_principal.add(funcionario);
-        pnl_principal.updateUI();
+        pnl_principal.updateUI();*/
     }//GEN-LAST:event_mnlFuncionarioActionPerformed
 
     private void mnlSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlSairActionPerformed
