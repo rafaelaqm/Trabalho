@@ -25,10 +25,7 @@ public class Cliente {
     private String Estado;
     private String Cep;
 
-    public Cliente(String Nome, String Telefone, String Email) {
-        this.Nome = Nome;
-        this.Telefone = Telefone;
-        this.Email = Email;
+    public Cliente() {
     }
 
     public Cliente(int Codigo, String Nome, String Rg, String Cpf, String Sexo, String Telefone, String Email, String Rua, String Numero, String Complemento, String Bairro, String Cidade, String Estado, String Cep) {
@@ -48,12 +45,6 @@ public class Cliente {
         this.Cep = Cep;
     }
 
-    public Cliente() {
-    }
-
-    public Cliente(int aInt, String string, String string0, String string1, String string2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public int getCodigo() {
         return Codigo;
@@ -167,4 +158,15 @@ public class Cliente {
         this.Cep = Cep;
     }
 
+    public Cliente(int Codigo, String Nome, String Rua, String Cidade, String Estado) {
+        this.Codigo = Codigo;
+        this.Nome = Nome;
+        this.Rua = Rua;
+        this.Cidade = Cidade;
+        this.Estado = Estado;
+    }
+
+
+
+  
 }

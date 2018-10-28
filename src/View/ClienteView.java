@@ -22,19 +22,20 @@ import Model.Cliente;
  * @author wyss2
  */
 public class ClienteView extends javax.swing.JInternalFrame {
+
     Cliente cliente;
     ClienteDAO clienteDAO;
     List<Cliente> listaClientes;
-    
+
     public ClienteView() {
         clienteDAO = new ClienteDAO();
         listaClientes = new ArrayList<>();
         initComponents();
         this.setVisible(true);
-        //atualizarTabelaCliente();
+        atualizarTabelaCliente();
     }
-    
-    public void atualizarTabelaCliente(){
+
+    public void atualizarTabelaCliente() {
         cliente = new Cliente();
         try {
             listaClientes = clienteDAO.ListaCliente();
@@ -42,31 +43,32 @@ public class ClienteView extends javax.swing.JInternalFrame {
             Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
         String dados[][] = new String[listaClientes.size()][5];
-        int i=0;
-        for (Cliente cliente : listaClientes){
+        int i = 0;
+        for (Cliente cliente : listaClientes) {
             dados[i][0] = String.valueOf(cliente.getCodigo());
             dados[i][1] = cliente.getNome();
-            dados[i][2] = cliente.getCpf();
+            dados[i][2] = cliente.getRua();
             dados[i][3] = cliente.getCidade();
             dados[i][4] = cliente.getEstado();
             i++;
         }
-        String tituloColuna[] = {"Nome","Telefone","Email"};
+        String tituloColuna[] = {"Código", "Nome", "Rua", "Cidade", "Estado"};
         DefaultTableModel tabelaCliente = new DefaultTableModel();
         tabelaCliente.setDataVector(dados, tituloColuna);
-        tblCliente.setModel(new DefaultTableModel(dados,tituloColuna){
+        tblCliente.setModel(new DefaultTableModel(dados, tituloColuna) {
             boolean[] canEdit = new boolean[]{
-                false, false, false
+                false, false, false, false, false
             };
-            
-            public boolean isCellEditable(int rowIndex, int columnIndex){
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
         });
-
+        tblCliente.getColumnModel().getColumn(0).setPreferredWidth(100);
         tblCliente.getColumnModel().getColumn(1).setPreferredWidth(300);
-        tblCliente.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tblCliente.getColumnModel().getColumn(2).setPreferredWidth(150);
         tblCliente.getColumnModel().getColumn(3).setPreferredWidth(200);
+        tblCliente.getColumnModel().getColumn(4).setPreferredWidth(200);
 
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -74,8 +76,8 @@ public class ClienteView extends javax.swing.JInternalFrame {
         tblCliente.setRowHeight(25);
         tblCliente.updateUI();
     }
-    
-    public void limpaCamposCliente(){
+
+    public void limpaCamposCliente() {
         txtCodigo.setText("");
         txtNome.setText("");
         txtCpf.setText("");
@@ -91,7 +93,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         txtEstado.setText("");
         txtCep.setText("");
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,8 +104,6 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         btnSalvar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblCliente = new javax.swing.JTable();
         btnExcluir = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -138,6 +138,8 @@ public class ClienteView extends javax.swing.JInternalFrame {
         txtSexo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JFormattedTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCliente = new javax.swing.JTable();
 
         setClosable(true);
 
@@ -147,24 +149,6 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-
-        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblClienteMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblCliente);
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -377,6 +361,19 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblCliente);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -393,9 +390,11 @@ public class ClienteView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 570, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -409,18 +408,18 @@ public class ClienteView extends javax.swing.JInternalFrame {
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(txtNome.getText().isEmpty() || txtCpf.getText().isEmpty()){
+        if (txtNome.getText().isEmpty() || txtCpf.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha pelo menos o Nome e CPF");
             txtNome.requestFocusInWindow();
-        }else{
+        } else {
             cliente = new Cliente();
             cliente.setNome(txtNome.getText());
             cliente.setCpf(txtCpf.getText());
@@ -437,6 +436,8 @@ public class ClienteView extends javax.swing.JInternalFrame {
             cliente.setCep(txtCep.getText());
             try {
                 clienteDAO.salvar(cliente);
+
+                System.out.println(cliente.getNome());
             } catch (SQLException ex) {
                 Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -444,34 +445,17 @@ public class ClienteView extends javax.swing.JInternalFrame {
             atualizarTabelaCliente();
             limpaCamposCliente();
         }
-        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
-        txtCodigo.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 0).toString());
-        txtNome.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 1).toString());
-        txtCpf.setText(cliente.getCpf());
-        txtRg.setText(cliente.getRg());
-        txtSexo.setText(cliente.getSexo());
-        txtTelefone.setText(cliente.getTelefone());
-        txtEmail.setText(cliente.getEmail());
-        txtEndereco.setText(cliente.getRua());
-        txtNumero.setText(cliente.getNumero());
-        txtComplemento.setText(cliente.getComplemento());
-        txtBairro.setText(cliente.getBairro());
-        txtCidade.setText(cliente.getCidade());
-        txtEstado.setText(cliente.getEstado());
-        txtCep.setText(cliente.getCep());
-    }//GEN-LAST:event_tblClienteMouseClicked
-
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if(txtCodigo.getText().isEmpty()){
+        if (txtCodigo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente");
-        } else{
+        } else {
             cliente = new Cliente();
             cliente.setCodigo(Integer.parseInt(txtCodigo.getText()));
             int confirma = JOptionPane.showConfirmDialog(null, "Deseja Excluir " + txtNome.getText() + "?");
-            if(confirma==0){
+            if (confirma == 0) {
                 try {
                     clienteDAO.excluir(cliente);
                 } catch (SQLException ex) {
@@ -488,9 +472,9 @@ public class ClienteView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if(txtCodigo.getText().isEmpty()){
+        if (txtCodigo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente");
-        } else{
+        } else {
             cliente = new Cliente();
             cliente.setNome(txtNome.getText());
             cliente.setCpf(txtCpf.getText());
@@ -537,7 +521,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblCliente;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCep;

@@ -78,8 +78,8 @@ public class ClienteDAO {
         pst = Conexão.getInstance().prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
-            listaClientes.add(new Cliente(rs.getInt("codigo"), rs.getString("nome"),
-            rs.getString("endereco"), rs.getString("cidade"), rs.getString("estado")));
+            listaClientes.add(new Cliente(rs.getInt("codCliente"), rs.getString("Nome"),
+            rs.getString("Rua"), rs.getString("Cidade"), rs.getString("Estado")));
         }
         pst.close();
         return listaClientes;
