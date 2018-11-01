@@ -158,15 +158,12 @@ public class Cliente {
         this.Cep = Cep;
     }
 
-    public Cliente(int Codigo, String Nome, String Rua, String Cidade, String Estado) {
+    public Cliente(int Codigo, String Nome, String Telefone, String Email, String Cidade, String Estado) {
         this.Codigo = Codigo;
         this.Nome = Nome;
-        this.Rua = Rua;
+        this.Telefone = Telefone;
+        this.Email = Email;
         this.Cidade = Cidade;
         this.Estado = Estado;
     }
-
-
-
-  
 }

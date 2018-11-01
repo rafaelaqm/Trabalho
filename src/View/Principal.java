@@ -31,8 +31,9 @@ public class Principal extends javax.swing.JFrame {
         pnl_principal = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuArquivo = new javax.swing.JMenu();
-        mnlCliente = new javax.swing.JMenuItem();
-        mnlFuncionario = new javax.swing.JMenuItem();
+        mniCliente = new javax.swing.JMenuItem();
+        mniFuncionario = new javax.swing.JMenuItem();
+        mniPeca = new javax.swing.JMenuItem();
         mnuSair = new javax.swing.JMenu();
         mnlSair = new javax.swing.JMenuItem();
 
@@ -52,21 +53,29 @@ public class Principal extends javax.swing.JFrame {
 
         mnuArquivo.setText("Arquivo");
 
-        mnlCliente.setText("Cliente");
-        mnlCliente.addActionListener(new java.awt.event.ActionListener() {
+        mniCliente.setText("Cliente");
+        mniCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnlClienteActionPerformed(evt);
+                mniClienteActionPerformed(evt);
             }
         });
-        mnuArquivo.add(mnlCliente);
+        mnuArquivo.add(mniCliente);
 
-        mnlFuncionario.setText("Funcionario");
-        mnlFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        mniFuncionario.setText("Funcionario");
+        mniFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnlFuncionarioActionPerformed(evt);
+                mniFuncionarioActionPerformed(evt);
             }
         });
-        mnuArquivo.add(mnlFuncionario);
+        mnuArquivo.add(mniFuncionario);
+
+        mniPeca.setText("Peça");
+        mniPeca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniPecaActionPerformed(evt);
+            }
+        });
+        mnuArquivo.add(mniPeca);
 
         jMenuBar1.add(mnuArquivo);
 
@@ -98,31 +107,39 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnlFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlFuncionarioActionPerformed
-        /*FuncionarioView funcionario = new FuncionarioView();
+    private void mniFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFuncionarioActionPerformed
+        //FuncionarioView funcionario = new FuncionarioView();
         pnl_principal.removeAll();
-        pnl_principal.add(funcionario);
-        pnl_principal.updateUI();*/
-    }//GEN-LAST:event_mnlFuncionarioActionPerformed
+        //pnl_principal.add(funcionario);
+        pnl_principal.updateUI();
+    }//GEN-LAST:event_mniFuncionarioActionPerformed
 
     private void mnlSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlSairActionPerformed
         this.dispose();
     }//GEN-LAST:event_mnlSairActionPerformed
 
-    private void mnlClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlClienteActionPerformed
+    private void mniClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniClienteActionPerformed
         ClienteView cliente = new ClienteView();
         pnl_principal.removeAll();
         pnl_principal.add(cliente);
         pnl_principal.updateUI();
-    }//GEN-LAST:event_mnlClienteActionPerformed
+    }//GEN-LAST:event_mniClienteActionPerformed
+
+    private void mniPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPecaActionPerformed
+        PecaView peca = new PecaView();
+        pnl_principal.removeAll();
+        pnl_principal.add(peca);
+        pnl_principal.updateUI();
+    }//GEN-LAST:event_mniPecaActionPerformed
 
     /**
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem mnlCliente;
-    private javax.swing.JMenuItem mnlFuncionario;
+    private javax.swing.JMenuItem mniCliente;
+    private javax.swing.JMenuItem mniFuncionario;
+    private javax.swing.JMenuItem mniPeca;
     private javax.swing.JMenuItem mnlSair;
     private javax.swing.JMenu mnuArquivo;
     private javax.swing.JMenu mnuSair;
