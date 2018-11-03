@@ -33,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
         mnuArquivo = new javax.swing.JMenu();
         mniCliente = new javax.swing.JMenuItem();
         mniFuncionario = new javax.swing.JMenuItem();
-        mniPeca = new javax.swing.JMenuItem();
+        mniProduto = new javax.swing.JMenuItem();
         mnuSair = new javax.swing.JMenu();
         mnlSair = new javax.swing.JMenuItem();
 
@@ -69,13 +69,13 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuArquivo.add(mniFuncionario);
 
-        mniPeca.setText("Peça");
-        mniPeca.addActionListener(new java.awt.event.ActionListener() {
+        mniProduto.setText("Produto");
+        mniProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniPecaActionPerformed(evt);
+                mniProdutoActionPerformed(evt);
             }
         });
-        mnuArquivo.add(mniPeca);
+        mnuArquivo.add(mniProduto);
 
         jMenuBar1.add(mnuArquivo);
 
@@ -125,12 +125,12 @@ public class Principal extends javax.swing.JFrame {
         pnl_principal.updateUI();
     }//GEN-LAST:event_mniClienteActionPerformed
 
-    private void mniPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPecaActionPerformed
-        PecaView peca = new PecaView();
+    private void mniProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniProdutoActionPerformed
+        ProdutoView peca = new ProdutoView();
         pnl_principal.removeAll();
         pnl_principal.add(peca);
         pnl_principal.updateUI();
-    }//GEN-LAST:event_mniPecaActionPerformed
+    }//GEN-LAST:event_mniProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,7 +139,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mniCliente;
     private javax.swing.JMenuItem mniFuncionario;
-    private javax.swing.JMenuItem mniPeca;
+    private javax.swing.JMenuItem mniProduto;
     private javax.swing.JMenuItem mnlSair;
     private javax.swing.JMenu mnuArquivo;
     private javax.swing.JMenu mnuSair;

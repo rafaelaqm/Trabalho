@@ -58,6 +58,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             dados[i][5] = funcionario.getEstado();
             i++;
         }
+        
         String tituloColuna[] = {"Código", "Nome", "Telefone", "Email", "Cidade", "Estado"};
         DefaultTableModel tabelaFuncionario = new DefaultTableModel();
         tabelaFuncionario.setDataVector(dados, tituloColuna);

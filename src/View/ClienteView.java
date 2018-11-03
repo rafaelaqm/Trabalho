@@ -36,7 +36,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         initComponents();
         this.setVisible(true);
         atualizarTabelaCliente();
-        DesativaCampos();
+        PreparaNovo();
     }
 
     public void atualizarTabelaCliente() {

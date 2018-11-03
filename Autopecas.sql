@@ -2,7 +2,7 @@ create database if not exists trabalho;
 
 use trabalho;
 
-CREATE TABLE `cliente` IF NOT EXISTS(
+CREATE TABLE `cliente`(
   `codCliente` int(5) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
   `Rg` varchar(20) DEFAULT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE `cliente` IF NOT EXISTS(
   PRIMARY KEY (`codCliente`)
 )
 
-CREATE TABLE IF NOT EXISTS `funcionario` (
+CREATE TABLE `funcionario` (
   `codFuncionario` int(5) NOT NULL AUTO_INCREMENT,
   `Funcao` varchar(50) NOT NULL,
   `Salario`double NOT NULL,

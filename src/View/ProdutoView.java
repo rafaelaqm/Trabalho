@@ -5,7 +5,7 @@
  */
 package View;
 
-import DAO.PecaDAO;
+import DAO.ProdutoDAO;
 import DAO.Conexão;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import Model.Peca;
+import Model.Produto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -24,14 +24,14 @@ import java.sql.ResultSet;
  *
  * @author wyss2
  */
-public class PecaView extends javax.swing.JInternalFrame {
+public class ProdutoView extends javax.swing.JInternalFrame {
 
-    Peca peca;
-    PecaDAO pecaDAO;
-    List<Peca> listaPecas;
+    Produto peca;
+    ProdutoDAO pecaDAO;
+    List<Produto> listaPecas;
 
-    public PecaView() {
-        pecaDAO = new PecaDAO();
+    public ProdutoView() {
+        pecaDAO = new ProdutoDAO();
         listaPecas = new ArrayList<>();
         initComponents();
         this.setVisible(true);
@@ -40,37 +40,38 @@ public class PecaView extends javax.swing.JInternalFrame {
     }
 
     public void atualizarTabelaPeca() {
-        peca = new Peca();
+        peca = new Produto();
         try {
             listaPecas = pecaDAO.ListaPeca();
         } catch (SQLException ex) {
-            Logger.getLogger(PecaView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        String dados[][] = new String[listaPecas.size()][3];
+        String dados[][] = new String[listaPecas.size()][4];
         int i = 0;
-        for (Peca peca : listaPecas) {
+        for (Produto peca : listaPecas) {
             dados[i][0] = String.valueOf(peca.getCodigo());
             dados[i][1] = peca.getTextoBreve();
-            dados[i][2] = String.valueOf(peca.getSaldo());
+            dados[i][2] = peca.getDescritivoCompleto();
+            dados[i][3] = String.valueOf(peca.getSaldo());
             i++;
         }
-        String tituloColuna[] = {"Código", "Texto Breve", "Saldo"};
+        String tituloColuna[] = {"Código", "Texto Breve", "Descritivo Completo", "Saldo"};
         DefaultTableModel tabelaPeca = new DefaultTableModel();
         tabelaPeca.setDataVector(dados, tituloColuna);
         tblPeca.setModel(new DefaultTableModel(dados, tituloColuna) {
             boolean[] canEdit = new boolean[]{
-                false, false, false
+                false, false, false,false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
         });
-        tblPeca.getColumnModel().getColumn(0).setPreferredWidth(70);
-        tblPeca.getColumnModel().getColumn(1).setPreferredWidth(450);
-        tblPeca.getColumnModel().getColumn(2).setPreferredWidth(150);
-
+        tblPeca.getColumnModel().getColumn(0).setPreferredWidth(40);
+        tblPeca.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblPeca.getColumnModel().getColumn(2).setPreferredWidth(350);
+        tblPeca.getColumnModel().getColumn(3).setPreferredWidth(70);
         tblPeca.setRowHeight(25);
         tblPeca.updateUI();
     }
@@ -222,15 +223,17 @@ public class PecaView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel16)
                     .addComponent(txtDescritivoCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(txtPrecoAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel18)
-                        .addComponent(txtPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
-                            .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(txtPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel17)
+                        .addComponent(txtPrecoAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -306,7 +309,7 @@ public class PecaView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Preencha pelo menos o Texto Breve");
             txtTextoBreve.requestFocusInWindow();
         } else if (txtCodigo.getText().isEmpty()){
-            peca = new Peca();
+            peca = new Produto();
             peca.setTextoBreve(txtTextoBreve.getText());
             peca.setDescritivoCompleto(txtDescritivoCompleto.getText());
             peca.setPrecoAquisicao(Double.parseDouble(txtPrecoAquisicao.getText()));
@@ -315,7 +318,7 @@ public class PecaView extends javax.swing.JInternalFrame {
                 pecaDAO.salvar(peca);
                 System.out.println(peca.getTextoBreve());
             } catch (SQLException ex) {
-                Logger.getLogger(PecaView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Gravado com Sucesso");
             atualizarTabelaPeca();
@@ -323,7 +326,7 @@ public class PecaView extends javax.swing.JInternalFrame {
             DesativaCampos();
             limpaCamposPeca();
         } else{
-            peca = new Peca();
+            peca = new Produto();
             peca.setTextoBreve(txtTextoBreve.getText());
             peca.setDescritivoCompleto(txtDescritivoCompleto.getText());
             peca.setPrecoAquisicao(Double.parseDouble(txtPrecoAquisicao.getText()));
@@ -333,7 +336,7 @@ public class PecaView extends javax.swing.JInternalFrame {
 
                 System.out.println(peca.getTextoBreve());
             } catch (SQLException ex) {
-                Logger.getLogger(PecaView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Alterado com Sucesso");
             atualizarTabelaPeca();
@@ -347,14 +350,14 @@ public class PecaView extends javax.swing.JInternalFrame {
         if (txtCodigo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Selecione uma Peca");
         } else {
-            peca = new Peca();
+            peca = new Produto();
             peca.setCodigo(Integer.parseInt(txtCodigo.getText()));
             int confirma = JOptionPane.showConfirmDialog(null, "Deseja Excluir " + txtTextoBreve.getText() + "?");
             if (confirma == 0) {
                 try {
                     pecaDAO.excluir(peca);
                 } catch (SQLException ex) {
-                    Logger.getLogger(PecaView.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 atualizarTabelaPeca();
                 limpaCamposPeca();

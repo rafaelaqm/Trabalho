@@ -59,28 +59,10 @@ public class ClienteDAO {
         pst.setString(5, cliente.getEstado());
         pst.setInt(6, cliente.getCodigo());
         System.out.println(pst);
-        
-        /*sql= "update cliente set nome=?, endereco=?, cidade=?, estado=? where codCliente=?";
-        pst = Conexão.getInstance().prepareStatement(sql);
-        pst.setString(1, cliente.getNome());
-        pst.setString(2, cliente.getRg());
-        pst.setString(3, cliente.getCpf());
-        pst.setString(4, cliente.getSexo());
-        pst.setString(5, cliente.getTelefone());
-        pst.setString(6, cliente.getEmail());
-        pst.setString(7, cliente.getRua());
-        pst.setString(8, cliente.getNumero());
-        pst.setString(9, cliente.getComplemento());
-        pst.setString(10, cliente.getBairro());
-        pst.setString(11, cliente.getCidade());
-        pst.setString(12, cliente.getEstado());
-        pst.setString(13, cliente.getCep());
-        pst.setInt(14, cliente.getCodigo());*/
         pst.execute();
         pst.close();
     }
     
-    //corrigir geral ListaCliente
     public List<Cliente> ListaCliente() throws SQLException{
         List<Cliente> listaClientes;
         listaClientes = new ArrayList<>();
@@ -90,8 +72,6 @@ public class ClienteDAO {
         while(rs.next()){
             listaClientes.add(new Cliente(rs.getInt("codCliente"), rs.getString("Nome"), rs.getString("Telefone"),
             rs.getString("Email"), rs.getString("Cidade"), rs.getString("Estado")));
-            /*listaClientes.add(new Cliente(rs.getInt("codCliente"), rs.getString("Nome"),
-            rs.getString("Rua"), rs.getString("Cidade"), rs.getString("Estado")));*/
         }
         pst.close();
         return listaClientes;
