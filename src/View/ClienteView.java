@@ -36,7 +36,6 @@ public class ClienteView extends javax.swing.JInternalFrame {
         initComponents();
         this.setVisible(true);
         atualizarTabelaCliente();
-        PreparaNovo();
     }
 
     public void atualizarTabelaCliente() {
@@ -151,6 +150,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(1024, 498));
 
         btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -158,6 +158,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -172,6 +173,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -389,6 +391,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblCliente);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -524,13 +527,35 @@ public class ClienteView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        PreparaAlterar();
-        AtivaCampos();
+            cliente = new Cliente();
+            cliente.setNome(txtNome.getText());
+            cliente.setCpf(txtCpf.getText());
+            cliente.setRg(txtRg.getText());
+            cliente.setSexo(txtSexo.getText());
+            cliente.setTelefone(txtTelefone.getText());
+            cliente.setEmail(txtEmail.getText());
+            cliente.setRua(txtEndereco.getText());
+            cliente.setNumero(txtNumero.getText());
+            cliente.setComplemento(txtComplemento.getText());
+            cliente.setBairro(txtBairro.getText());
+            cliente.setCidade(txtCidade.getText());
+            cliente.setEstado(txtEstado.getText());
+            cliente.setCep(txtCep.getText());
+            cliente.setCodigo(Integer.parseInt(txtCodigo.getText()));
+
+            try {
+                clienteDAO.alterar(cliente);
+            } catch (SQLException ex) {
+                Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            atualizarTabelaCliente();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
+        cliente = new Cliente();
         txtCodigo.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 0).toString());
         txtNome.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 1).toString());
+        txtCpf.setText(cliente.getCpf());
         txtTelefone.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 2).toString());
         txtEmail.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 3).toString());
         txtCidade.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 4).toString());

@@ -158,6 +158,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(1024, 498));
 
         btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -165,6 +166,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -179,6 +181,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -418,6 +421,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblFuncionario);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);

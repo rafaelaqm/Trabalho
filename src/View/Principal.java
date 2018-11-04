@@ -108,9 +108,9 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFuncionarioActionPerformed
-        //FuncionarioView funcionario = new FuncionarioView();
+        FuncionarioView funcionario = new FuncionarioView();
         pnl_principal.removeAll();
-        //pnl_principal.add(funcionario);
+        pnl_principal.add(funcionario);
         pnl_principal.updateUI();
     }//GEN-LAST:event_mniFuncionarioActionPerformed
 

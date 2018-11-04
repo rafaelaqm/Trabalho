@@ -50,14 +50,22 @@ public class ClienteDAO {
     }
     
     public void alterar(Cliente cliente) throws SQLException{
-        sql= "update cliente set Nome=?, Telefone=?, Email=?, Cidade=?, Estado=? where codCliente=?";
+        sql= "update cliente set Nome=?, Cpf=?, Rg=?, Sexo=?, Telefone=?, Email=?, Rua=?, Numero=?, Complemento=?, Bairro=?, Cidade=?, Estado=?, Cep=? where codCliente=?";
         pst = Conexão.getInstance().prepareStatement(sql);
         pst.setString(1, cliente.getNome());
-        pst.setString(2, cliente.getTelefone());
-        pst.setString(3, cliente.getEmail());
-        pst.setString(4, cliente.getCidade());
-        pst.setString(5, cliente.getEstado());
-        pst.setInt(6, cliente.getCodigo());
+        pst.setString(2, cliente.getCpf());
+        pst.setString(3, cliente.getRg());
+        pst.setString(4, cliente.getSexo());
+        pst.setString(5, cliente.getTelefone());
+        pst.setString(6, cliente.getEmail());
+        pst.setString(7, cliente.getRua());
+        pst.setString(8, cliente.getNumero());
+        pst.setString(9, cliente.getComplemento());
+        pst.setString(10, cliente.getBairro());
+        pst.setString(11, cliente.getCidade());
+        pst.setString(12, cliente.getEstado());
+        pst.setString(13, cliente.getCep());
+        pst.setInt(14, cliente.getCodigo());
         System.out.println(pst);
         pst.execute();
         pst.close();
