@@ -1,65 +1,56 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
+import Model.Produto;
 import DAO.ProdutoDAO;
 import DAO.Conexão;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import Model.Produto;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import javax.swing.table.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import java.awt.Desktop;
+import java.io.*;
+import java.sql.*;
 
-/**
- *
- * @author wyss2
- */
 public class ProdutoView extends javax.swing.JInternalFrame {
 
-    Produto peca;
-    ProdutoDAO pecaDAO;
-    List<Produto> listaPecas;
+    Produto produto;
+    ProdutoDAO produtoDAO;
+    List<Produto> listaProduto;
 
     public ProdutoView() {
-        pecaDAO = new ProdutoDAO();
-        listaPecas = new ArrayList<>();
+        produtoDAO = new ProdutoDAO();
+        listaProduto = new ArrayList<>();
         initComponents();
         this.setVisible(true);
-        atualizarTabelaPeca();
+        atualizarTabelaProduto();
         DesativaCampos();
     }
 
-    public void atualizarTabelaPeca() {
-        peca = new Produto();
+    public void atualizarTabelaProduto() {
+        produto = new Produto();
         try {
-            listaPecas = pecaDAO.ListaPeca();
+            listaProduto = produtoDAO.ListaProduto();
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        String dados[][] = new String[listaPecas.size()][4];
+        String dados[][] = new String[listaProduto.size()][4];
         int i = 0;
-        for (Produto peca : listaPecas) {
-            dados[i][0] = String.valueOf(peca.getCodigo());
-            dados[i][1] = peca.getTextoBreve();
-            dados[i][2] = peca.getDescritivoCompleto();
-            dados[i][3] = String.valueOf(peca.getSaldo());
+        for (Produto produto : listaProduto) {
+            dados[i][0] = String.valueOf(produto.getCodigo());
+            dados[i][1] = produto.getTextoBreve();
+            dados[i][2] = produto.getDescritivoCompleto();
+            dados[i][3] = String.valueOf(produto.getSaldo());
             i++;
         }
         String tituloColuna[] = {"Código", "Texto Breve", "Descritivo Completo", "Saldo"};
-        DefaultTableModel tabelaPeca = new DefaultTableModel();
-        tabelaPeca.setDataVector(dados, tituloColuna);
-        tblPeca.setModel(new DefaultTableModel(dados, tituloColuna) {
+        DefaultTableModel tabelaProduto = new DefaultTableModel();
+        tabelaProduto.setDataVector(dados, tituloColuna);
+        tblProduto.setModel(new DefaultTableModel(dados, tituloColuna) {
             boolean[] canEdit = new boolean[]{
                 false, false, false,false
             };
@@ -68,15 +59,15 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                 return canEdit[columnIndex];
             }
         });
-        tblPeca.getColumnModel().getColumn(0).setPreferredWidth(40);
-        tblPeca.getColumnModel().getColumn(1).setPreferredWidth(150);
-        tblPeca.getColumnModel().getColumn(2).setPreferredWidth(350);
-        tblPeca.getColumnModel().getColumn(3).setPreferredWidth(70);
-        tblPeca.setRowHeight(25);
-        tblPeca.updateUI();
+        tblProduto.getColumnModel().getColumn(0).setPreferredWidth(40);
+        tblProduto.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblProduto.getColumnModel().getColumn(2).setPreferredWidth(350);
+        tblProduto.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tblProduto.setRowHeight(25);
+        tblProduto.updateUI();
     }
 
-    public void limpaCamposPeca() {
+    public void limpaCamposProduto() {
         txtCodigo.setText("");
         txtTextoBreve.setText("");
         txtDescritivoCompleto.setText("");
@@ -113,8 +104,9 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         jLabel19 = new javax.swing.JLabel();
         txtSaldo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblPeca = new javax.swing.JTable();
+        tblProduto = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
+        btnRelatorioGeral = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -239,7 +231,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tblPeca.setModel(new javax.swing.table.DefaultTableModel(
+        tblProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -250,18 +242,25 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblPeca.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblProduto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblPecaMouseClicked(evt);
+                tblProdutoMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tblPeca);
+        jScrollPane2.setViewportView(tblProduto);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnRelatorioGeral.setText("Relatório Geral");
+        btnRelatorioGeral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorioGeralActionPerformed(evt);
             }
         });
 
@@ -283,6 +282,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRelatorioGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
                 .addContainerGap())
@@ -298,7 +299,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRelatorioGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                 .addContainerGap())
@@ -312,37 +314,37 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Preencha pelo menos o Texto Breve");
             txtTextoBreve.requestFocusInWindow();
         } else if (txtCodigo.getText().isEmpty()){
-            peca = new Produto();
-            peca.setTextoBreve(txtTextoBreve.getText());
-            peca.setDescritivoCompleto(txtDescritivoCompleto.getText());
-            peca.setPrecoAquisicao(Double.parseDouble(txtPrecoAquisicao.getText()));
-            peca.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
+            produto = new Produto();
+            produto.setTextoBreve(txtTextoBreve.getText());
+            produto.setDescritivoCompleto(txtDescritivoCompleto.getText());
+            produto.setPrecoAquisicao(Double.parseDouble(txtPrecoAquisicao.getText()));
+            produto.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
             try {
-                pecaDAO.salvar(peca);
-                System.out.println(peca.getTextoBreve());
+                produtoDAO.salvar(produto);
+                System.out.println(produto.getTextoBreve());
             } catch (SQLException ex) {
                 Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Gravado com Sucesso");
-            atualizarTabelaPeca();
+            atualizarTabelaProduto();
             PreparaSalvarCancelar();
             DesativaCampos();
-            limpaCamposPeca();
+            limpaCamposProduto();
         } else{
-            peca = new Produto();
-            peca.setTextoBreve(txtTextoBreve.getText());
-            peca.setDescritivoCompleto(txtDescritivoCompleto.getText());
-            peca.setPrecoAquisicao(Double.parseDouble(txtPrecoAquisicao.getText()));
-            peca.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
+            produto = new Produto();
+            produto.setTextoBreve(txtTextoBreve.getText());
+            produto.setDescritivoCompleto(txtDescritivoCompleto.getText());
+            produto.setPrecoAquisicao(Double.parseDouble(txtPrecoAquisicao.getText()));
+            produto.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
             try {
-                pecaDAO.alterar(peca);
+                produtoDAO.alterar(produto);
 
-                System.out.println(peca.getTextoBreve());
+                System.out.println(produto.getTextoBreve());
             } catch (SQLException ex) {
                 Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Alterado com Sucesso");
-            atualizarTabelaPeca();
+            atualizarTabelaProduto();
             PreparaSalvarCancelar();
             DesativaCampos();
         }
@@ -351,47 +353,141 @@ public class ProdutoView extends javax.swing.JInternalFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (txtCodigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione uma Peca");
+            JOptionPane.showMessageDialog(null, "Selecione um Produto");
         } else {
-            peca = new Produto();
-            peca.setCodigo(Integer.parseInt(txtCodigo.getText()));
+            produto = new Produto();
+            produto.setCodigo(Integer.parseInt(txtCodigo.getText()));
             int confirma = JOptionPane.showConfirmDialog(null, "Deseja Excluir " + txtTextoBreve.getText() + "?");
             if (confirma == 0) {
                 try {
-                    pecaDAO.excluir(peca);
+                    produtoDAO.excluir(produto);
                 } catch (SQLException ex) {
                     Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                atualizarTabelaPeca();
-                limpaCamposPeca();
+                atualizarTabelaProduto();
+                limpaCamposProduto();
                 PreparaExcluir();
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        limpaCamposPeca();
+        limpaCamposProduto();
         PreparaNovo();
         AtivaCampos();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        PreparaAlterar();
-        AtivaCampos();
+            produto = new Produto();
+            produto.setTextoBreve(txtTextoBreve.getText());
+            produto.setDescritivoCompleto(txtDescritivoCompleto.getText());
+            produto.setPrecoAquisicao(Double.parseDouble(txtPrecoAquisicao.getText()));
+            produto.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
+            produto.setCodigo(Integer.parseInt(txtCodigo.getText()));
+            try {
+                produtoDAO.alterar(produto);
+            } catch (SQLException ex) {
+                Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            atualizarTabelaProduto();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void tblPecaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPecaMouseClicked
-        txtCodigo.setText(tblPeca.getValueAt(tblPeca.getSelectedRow(), 0).toString());
-        txtTextoBreve.setText(tblPeca.getValueAt(tblPeca.getSelectedRow(), 1).toString());
-        txtSaldo.setText(tblPeca.getValueAt(tblPeca.getSelectedRow(), 2).toString());
+    private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
+        txtCodigo.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
+        txtTextoBreve.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 1).toString());
+        txtSaldo.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 2).toString());
         PreparaSelecaoTabela();
-    }//GEN-LAST:event_tblPecaMouseClicked
+    }//GEN-LAST:event_tblProdutoMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        limpaCamposPeca();
+        limpaCamposProduto();
         PreparaSalvarCancelar();
         DesativaCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    public void gerarDocumento(){
+        try{
+            List<Produto> lista = new ArrayList<>();
+            lista = produtoDAO.ListaProduto();
+            Document doc = new Document(PageSize.A4, 41.5f, 41.5f, 55.2f, 55.2f);
+            PdfWriter.getInstance(doc, new FileOutputStream("C:/Relatorios/RelatorioGeralProdutos.pdf"));
+            doc.open();
+            
+            Font f1 = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+            Font f2 = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+            Font f3 = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL);
+            Font f4 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
+            Font f5 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+            
+            Paragraph titulo1 = new Paragraph("Universidade do Estado de Minas Gerais", f2);
+            titulo1.setAlignment(Element.ALIGN_CENTER);
+            titulo1.setSpacingAfter(10);
+            
+            Paragraph titulo2 = new Paragraph("Relatorio de Produtos", f1);
+            titulo1.setAlignment(Element.ALIGN_CENTER);
+            titulo1.setSpacingAfter(0);
+            
+            PdfPTable tabela = new PdfPTable(new float[]{0,40f, 0,60f});
+            tabela.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tabela.setWidthPercentage(100f);
+            
+            PdfPCell cabecalho1 = new PdfPCell(new Paragraph("Nome",f3));
+            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho1.setBorder(0);
+            
+            PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Endereço",f3));
+            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho1.setBorder(0);
+            
+            tabela.addCell(cabecalho1);
+            tabela.addCell(cabecalho2);
+            
+            for(Produto produto:lista){
+                Paragraph p1 = new Paragraph(produto.getTextoBreve(),f5);
+                p1.setAlignment(Element.ALIGN_JUSTIFIED);
+                PdfPCell col1= new PdfPCell(p1);
+                col1.setBorder(0);
+                
+                Paragraph p2 = new Paragraph(produto.getPrecoVenda(),f5);
+                p1.setAlignment(Element.ALIGN_JUSTIFIED);
+                PdfPCell col2= new PdfPCell(p2);
+                col2.setBorder(0);
+                
+                tabela.addCell(col1);
+                tabela.addCell(col2);
+            }
+            doc.add(titulo2);
+            doc.add(titulo1);
+            doc.add(tabela);
+            doc.close();
+            
+            JOptionPane.showMessageDialog(null, "Relatório salvo com sucesso");
+            String caminho = "C:/Relatorios/RelatorioGeralProdutos.pdf";
+            Desktop.getDesktop().open(new File(caminho));
+        } catch (DocumentException e){
+            e.printStackTrace();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } catch (IOException exx){
+            exx.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Relatório aberto. Feche para gerar um novo!");
+        }
+    }
+        
+    private void btnRelatorioGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioGeralActionPerformed
+        String nomediretorio = null;
+        String nomepasta = "Relatorios";
+        String separador = java.io.File.separator;
+        try{
+            nomediretorio = "C:" + separador + nomepasta;
+            if (!new File(nomediretorio).exists()){
+                new File(nomediretorio).mkdir();
+            }
+            gerarDocumento();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnRelatorioGeralActionPerformed
 
     public void AtivaCampos(){
         txtTextoBreve.setEnabled(true);
@@ -413,8 +509,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         btnSalvar.setEnabled(true);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
-        tblPeca.setEnabled(false);
-        tblPeca.clearSelection();
+        tblProduto.setEnabled(false);
+        tblProduto.clearSelection();
     }
     
     public void PreparaSalvarCancelar(){
@@ -422,8 +518,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
-        tblPeca.setEnabled(true);
-        tblPeca.clearSelection();
+        tblProduto.setEnabled(true);
+        tblProduto.clearSelection();
     }
     
     public void PreparaSelecaoTabela(){
@@ -432,8 +528,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(true);
         btnAlterar.setEnabled(true);
-        tblPeca.setEnabled(true);
-        tblPeca.clearSelection();
+        tblProduto.setEnabled(true);
+        tblProduto.clearSelection();
     }
     
     public void PreparaAlterar(){
@@ -441,8 +537,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         btnSalvar.setEnabled(true);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
-        tblPeca.setEnabled(false);
-        tblPeca.clearSelection();
+        tblProduto.setEnabled(false);
+        tblProduto.clearSelection();
     }
     
     public void PreparaExcluir(){
@@ -450,8 +546,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
-        tblPeca.setEnabled(true);
-        tblPeca.clearSelection();
+        tblProduto.setEnabled(true);
+        tblProduto.clearSelection();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -459,6 +555,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnRelatorioGeral;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
@@ -469,7 +566,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblPeca;
+    private javax.swing.JTable tblProduto;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescritivoCompleto;
     private javax.swing.JTextField txtPrecoAquisicao;

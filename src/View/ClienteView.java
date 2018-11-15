@@ -1,29 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
+import Model.Cliente;
 import DAO.ClienteDAO;
 import DAO.Conexão;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import Model.Cliente;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import javax.swing.table.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import java.awt.Desktop;
+import java.io.*;
+import java.sql.*;
 
-/**
- *
- * @author wyss2
- */
 public class ClienteView extends javax.swing.JInternalFrame {
 
     Cliente cliente;
@@ -144,6 +135,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCliente = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
+        btnRelatorioGeral = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -398,6 +390,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnRelatorioGeral.setText("Relatório Geral");
+        btnRelatorioGeral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorioGeralActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -416,6 +415,8 @@ public class ClienteView extends javax.swing.JInternalFrame {
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRelatorioGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
                 .addContainerGap())
@@ -431,9 +432,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRelatorioGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -515,6 +517,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
                 }
                 atualizarTabelaCliente();
                 limpaCamposCliente();
+                DesativaCampos();
                 PreparaExcluir();
             }
         }
@@ -552,15 +555,22 @@ public class ClienteView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
-        cliente = new Cliente();
-        txtCodigo.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 0).toString());
-        txtNome.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 1).toString());
+        limpaCamposCliente();
+        cliente = ClienteDAO.BuscaClienteporCodigo(Integer.parseInt(tblCliente.getValueAt(tblCliente.getSelectedRow(), 0).toString()));
+        txtNome.setText(cliente.getNome());
         txtCpf.setText(cliente.getCpf());
-        txtTelefone.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 2).toString());
-        txtEmail.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 3).toString());
-        txtCidade.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 4).toString());
-        txtEstado.setText(tblCliente.getValueAt(tblCliente.getSelectedRow(), 5).toString());
-        PreparaSelecaoTabela();
+        txtRg.setText(cliente.getRg());
+        txtSexo.setText(cliente.getSexo());
+        txtTelefone.setText(cliente.getTelefone());
+        txtEmail.setText(cliente.getEmail());
+        txtEndereco.setText(cliente.getRua());
+        txtNumero.setText(cliente.getNumero());
+        txtComplemento.setText(cliente.getComplemento());
+        txtBairro.setText(cliente.getBairro());
+        txtCidade.setText(cliente.getCidade());
+        txtEstado.setText(cliente.getEstado());
+        txtCep.setText(cliente.getCep());
+        PreparaSelecaoTabela();       
     }//GEN-LAST:event_tblClienteMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -568,6 +578,91 @@ public class ClienteView extends javax.swing.JInternalFrame {
         PreparaSalvarCancelar();
         DesativaCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    public void gerarDocumento(){
+        try{
+            List<Cliente> lista = new ArrayList<>();
+            lista = clienteDAO.ListaCliente();
+            Document doc = new Document(PageSize.A4, 41.5f, 41.5f, 55.2f, 55.2f);
+            PdfWriter.getInstance(doc, new FileOutputStream("C:/Relatorios/RelatorioGeralClientes.pdf"));
+            doc.open();
+            
+            Font f1 = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+            Font f2 = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+            Font f3 = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL);
+            Font f4 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
+            Font f5 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+            
+            Paragraph titulo1 = new Paragraph("Universidade do Estado de Minas Gerais", f2);
+            titulo1.setAlignment(Element.ALIGN_CENTER);
+            titulo1.setSpacingAfter(10);
+            
+            Paragraph titulo2 = new Paragraph("Relatorio de Clientes", f1);
+            titulo1.setAlignment(Element.ALIGN_CENTER);
+            titulo1.setSpacingAfter(0);
+            
+            PdfPTable tabela = new PdfPTable(new float[]{0,40f, 0,60f});
+            tabela.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tabela.setWidthPercentage(100f);
+            
+            PdfPCell cabecalho1 = new PdfPCell(new Paragraph("Nome",f3));
+            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho1.setBorder(0);
+            
+            PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Endereço",f3));
+            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho1.setBorder(0);
+            
+            tabela.addCell(cabecalho1);
+            tabela.addCell(cabecalho2);
+            
+            for(Cliente cliente:lista){
+                Paragraph p1 = new Paragraph(cliente.getNome(),f5);
+                p1.setAlignment(Element.ALIGN_JUSTIFIED);
+                PdfPCell col1= new PdfPCell(p1);
+                col1.setBorder(0);
+                
+                Paragraph p2 = new Paragraph(cliente.getRua() + ", " + cliente.getNumero() + "; " + cliente.getBairro() +
+                        " - " + cliente.getCidade() + "/" + cliente.getEstado(),f5);
+                p1.setAlignment(Element.ALIGN_JUSTIFIED);
+                PdfPCell col2= new PdfPCell(p2);
+                col2.setBorder(0);
+                
+                tabela.addCell(col1);
+                tabela.addCell(col2);
+            }
+            doc.add(titulo2);
+            doc.add(titulo1);
+            doc.add(tabela);
+            doc.close();
+            
+            JOptionPane.showMessageDialog(null, "Relatório salvo com sucesso");
+            String caminho = "C:/Relatorios/RelatorioGeralClientes.pdf";
+            Desktop.getDesktop().open(new File(caminho));
+        } catch (DocumentException e){
+            e.printStackTrace();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } catch (IOException exx){
+            exx.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Relatório aberto. Feche para gerar um novo!");
+        }
+    }
+    
+    private void btnRelatorioGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioGeralActionPerformed
+        String nomediretorio = null;
+        String nomepasta = "Relatorios";
+        String separador = java.io.File.separator;
+        try{
+            nomediretorio = "C:" + separador + nomepasta;
+            if (!new File(nomediretorio).exists()){
+                new File(nomediretorio).mkdir();
+            }
+            gerarDocumento();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnRelatorioGeralActionPerformed
 
     public void AtivaCampos(){
         txtNome.setEnabled(true);
@@ -603,8 +698,10 @@ public class ClienteView extends javax.swing.JInternalFrame {
     
     public void PreparaNovo(){
         AtivaCampos();
-        btnNovo.setEnabled(false);
         btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        
+        btnNovo.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
         tblCliente.setEnabled(false);
@@ -613,26 +710,32 @@ public class ClienteView extends javax.swing.JInternalFrame {
     
     public void PreparaSalvarCancelar(){
         btnNovo.setEnabled(true);
-        btnSalvar.setEnabled(false);
-        btnExcluir.setEnabled(false);
-        btnAlterar.setEnabled(false);
         tblCliente.setEnabled(true);
         tblCliente.clearSelection();
+        
+        btnSalvar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnAlterar.setEnabled(false);
     }
     
     public void PreparaSelecaoTabela(){
         AtivaCampos();
         btnNovo.setEnabled(true);
-        btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(true);
         btnAlterar.setEnabled(true);
+        btnCancelar.setEnabled(true);
         tblCliente.setEnabled(true);
         tblCliente.clearSelection();
+        
+        btnSalvar.setEnabled(false);
     }
     
     public void PreparaAlterar(){
-        btnNovo.setEnabled(false);
         btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        
+        btnNovo.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
         tblCliente.setEnabled(false);
@@ -641,11 +744,13 @@ public class ClienteView extends javax.swing.JInternalFrame {
     
     public void PreparaExcluir(){
         btnNovo.setEnabled(true);
+        tblCliente.setEnabled(true);
+        tblCliente.clearSelection();
+        
+        btnCancelar.setEnabled(false);
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
-        tblCliente.setEnabled(true);
-        tblCliente.clearSelection();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -653,6 +758,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnRelatorioGeral;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

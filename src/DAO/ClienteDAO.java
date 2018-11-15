@@ -11,12 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Cliente;
+import java.sql.Statement;
 
 /**
  *
  * @author wyss2
  */
 public class ClienteDAO {
+
     PreparedStatement pst;
     String sql;
     
@@ -83,5 +85,27 @@ public class ClienteDAO {
         }
         pst.close();
         return listaClientes;
+    }
+    
+    /**
+     *
+     * @throws SQLException
+     */
+    public Cliente BuscaClienteporCodigo(int id) throws SQLException {
+        Cliente cliente = null;
+        sql = "Select * from cliente where codigo=?";
+        Statement st;
+        pst = Conexão.getInstance().prepareStatement(sql);
+        pst.setInt(1, id);
+        pst.executeQuery();
+        ResultSet rs = pst.getResultSet();
+        while (rs.next()) {
+            cliente = new Cliente(rs.getInt("codCliente"), rs.getString("Nome"), rs.getString("Rg"), rs.getString("Cpf"),
+                    rs.getString("Sexo"), rs.getString("Telefone"), rs.getString("Email"), rs.getString("Rua"),
+                    rs.getString("Numero"), rs.getString("Complemento"), rs.getString("Bairro"), rs.getString("Cidade"),
+                    rs.getString("Estado"), rs.getString("Cep"));
+        }
+        pst.close();
+        return cliente;
     }
 }

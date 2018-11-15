@@ -20,15 +20,15 @@ public class ProdutoDAO {
     PreparedStatement pst;
     String sql;
     
-    public void salvar(Produto peca) throws SQLException{
+    public void salvar(Produto produto) throws SQLException{
         sql="insert into produto values(?,?,?,?,?,?)";
         pst=Conexão.getInstance().prepareStatement(sql);
         pst.setInt(1, 0);
-        pst.setString(2, peca.getTextoBreve());
-        pst.setString(3, peca.getDescritivoCompleto());
-        pst.setDouble(4, peca.getPrecoAquisicao());
-        pst.setDouble(5, peca.getPrecoVenda());
-        pst.setFloat(6, peca.getSaldo());
+        pst.setString(2, produto.getTextoBreve());
+        pst.setString(3, produto.getDescritivoCompleto());
+        pst.setDouble(4, produto.getPrecoAquisicao());
+        pst.setDouble(5, produto.getPrecoVenda());
+        pst.setFloat(6, produto.getSaldo());
         pst.execute();
         pst.close();
     }
@@ -41,30 +41,30 @@ public class ProdutoDAO {
         pst.close();
     }
     
-    public void alterar(Produto peca) throws SQLException{
+    public void alterar(Produto produto) throws SQLException{
         sql= "update produto set TextoBreve=?, DescritivoCompleto=?, PrecoAquisicao=?, PrecoVenda=? where codProduto=?";
         pst = Conexão.getInstance().prepareStatement(sql);
-        pst.setString(1, peca.getTextoBreve());
-        pst.setString(2, peca.getDescritivoCompleto());
-        pst.setDouble(3, peca.getPrecoAquisicao());
-        pst.setDouble(4, peca.getPrecoVenda());
-        pst.setInt(5, peca.getCodigo());
+        pst.setString(1, produto.getTextoBreve());
+        pst.setString(2, produto.getDescritivoCompleto());
+        pst.setDouble(3, produto.getPrecoAquisicao());
+        pst.setDouble(4, produto.getPrecoVenda());
+        pst.setInt(5, produto.getCodigo());
         System.out.println(pst);
         pst.execute();
         pst.close();
     }
     
     //corrigir geral ListaPeca
-    public List<Produto> ListaPeca() throws SQLException{
-        List<Produto> listaPecas;
-        listaPecas = new ArrayList<>();
+    public List<Produto> ListaProduto() throws SQLException{
+        List<Produto> listaProduto;
+        listaProduto = new ArrayList<>();
         sql="select * from produto order by TextoBreve";
         pst = Conexão.getInstance().prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
-            listaPecas.add(new Produto(rs.getInt("codProduto"), rs.getString("TextoBreve"), rs.getString("DescritivoCompleto"), rs.getFloat("Saldo")));
+            listaProduto.add(new Produto(rs.getInt("codProduto"), rs.getString("TextoBreve"), rs.getString("DescritivoCompleto"), rs.getFloat("Saldo")));
         }
         pst.close();
-        return listaPecas;
+        return listaProduto;
     }
 }

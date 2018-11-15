@@ -1,29 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
+import Model.Funcionario;
 import DAO.FuncionarioDAO;
 import DAO.Conexão;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import Model.Funcionario;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import javax.swing.table.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import java.awt.Desktop;
+import java.io.*;
+import java.sql.*;
 
-/**
- *
- * @author wyss2
- */
 public class FuncionarioView extends javax.swing.JInternalFrame {
 
     Funcionario funcionario;
@@ -152,6 +143,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblFuncionario = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
+        btnRelatorioGeral = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -428,6 +420,13 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnRelatorioGeral.setText("Relatório Geral");
+        btnRelatorioGeral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorioGeralActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -446,6 +445,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRelatorioGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
                 .addContainerGap())
@@ -461,7 +462,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRelatorioGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                 .addContainerGap())
@@ -561,8 +563,29 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        PreparaAlterar();
-        AtivaCampos();
+            funcionario = new Funcionario();
+            funcionario.setFuncao(txtFuncao.getText());
+            funcionario.setSalario(Double.parseDouble(txtSalario.getText()));
+            funcionario.setNome(txtNome.getText());
+            funcionario.setCpf(txtCpf.getText());
+            funcionario.setRg(txtRg.getText());
+            funcionario.setSexo(txtSexo.getText());
+            funcionario.setTelefone(txtTelefone.getText());
+            funcionario.setEmail(txtEmail.getText());
+            funcionario.setRua(txtEndereco.getText());
+            funcionario.setNumero(txtNumero.getText());
+            funcionario.setComplemento(txtComplemento.getText());
+            funcionario.setBairro(txtBairro.getText());
+            funcionario.setCidade(txtCidade.getText());
+            funcionario.setEstado(txtEstado.getText());
+            funcionario.setCep(txtCep.getText());
+            funcionario.setCodigo(Integer.parseInt(txtCodigo.getText()));
+            try {
+                funcionarioDAO.alterar(funcionario);
+            } catch (SQLException ex) {
+                Logger.getLogger(FuncionarioView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            atualizarTabelaFuncionario();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void tblFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncionarioMouseClicked
@@ -580,6 +603,91 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         PreparaSalvarCancelar();
         DesativaCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    public void gerarDocumento(){
+        try{
+            List<Funcionario> lista = new ArrayList<>();
+            lista = funcionarioDAO.ListaFuncionario();
+            Document doc = new Document(PageSize.A4, 41.5f, 41.5f, 55.2f, 55.2f);
+            PdfWriter.getInstance(doc, new FileOutputStream("C:/Relatorios/RelatorioGeralFuncionarios.pdf"));
+            doc.open();
+            
+            Font f1 = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+            Font f2 = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+            Font f3 = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL);
+            Font f4 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
+            Font f5 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+            
+            Paragraph titulo1 = new Paragraph("Universidade do Estado de Minas Gerais", f2);
+            titulo1.setAlignment(Element.ALIGN_CENTER);
+            titulo1.setSpacingAfter(10);
+            
+            Paragraph titulo2 = new Paragraph("Relatorio de Funcionarios", f1);
+            titulo1.setAlignment(Element.ALIGN_CENTER);
+            titulo1.setSpacingAfter(0);
+            
+            PdfPTable tabela = new PdfPTable(new float[]{0,40f, 0,60f});
+            tabela.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tabela.setWidthPercentage(100f);
+            
+            PdfPCell cabecalho1 = new PdfPCell(new Paragraph("Nome",f3));
+            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho1.setBorder(0);
+            
+            PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Endereço",f3));
+            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho1.setBorder(0);
+            
+            tabela.addCell(cabecalho1);
+            tabela.addCell(cabecalho2);
+            
+            for(Funcionario funcionario:lista){
+                Paragraph p1 = new Paragraph(funcionario.getNome(),f5);
+                p1.setAlignment(Element.ALIGN_JUSTIFIED);
+                PdfPCell col1= new PdfPCell(p1);
+                col1.setBorder(0);
+                
+                Paragraph p2 = new Paragraph(funcionario.getRua() + ", " + funcionario.getNumero() + "; " + funcionario.getBairro() +
+                        " - " + funcionario.getCidade() + "/" + funcionario.getEstado(),f5);
+                p1.setAlignment(Element.ALIGN_JUSTIFIED);
+                PdfPCell col2= new PdfPCell(p2);
+                col2.setBorder(0);
+                
+                tabela.addCell(col1);
+                tabela.addCell(col2);
+            }
+            doc.add(titulo2);
+            doc.add(titulo1);
+            doc.add(tabela);
+            doc.close();
+            
+            JOptionPane.showMessageDialog(null, "Relatório salvo com sucesso");
+            String caminho = "C:/Relatorios/RelatorioGeralFuncionarios.pdf";
+            Desktop.getDesktop().open(new File(caminho));
+        } catch (DocumentException e){
+            e.printStackTrace();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } catch (IOException exx){
+            exx.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Relatório aberto. Feche para gerar um novo!");
+        }
+    }
+        
+    private void btnRelatorioGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioGeralActionPerformed
+        String nomediretorio = null;
+        String nomepasta = "Relatorios";
+        String separador = java.io.File.separator;
+        try{
+            nomediretorio = "C:" + separador + nomepasta;
+            if (!new File(nomediretorio).exists()){
+                new File(nomediretorio).mkdir();
+            }
+            gerarDocumento();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnRelatorioGeralActionPerformed
 
     public void AtivaCampos(){
         txtFuncao.setEnabled(true);
@@ -669,6 +777,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnRelatorioGeral;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
