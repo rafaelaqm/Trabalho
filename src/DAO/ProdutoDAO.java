@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Produto;
+import java.sql.Statement;
 
 /**
  *
@@ -54,7 +55,6 @@ public class ProdutoDAO {
         pst.close();
     }
     
-    //corrigir geral ListaPeca
     public List<Produto> ListaProduto() throws SQLException{
         List<Produto> listaProduto;
         listaProduto = new ArrayList<>();
@@ -67,4 +67,33 @@ public class ProdutoDAO {
         pst.close();
         return listaProduto;
     }
+
+    public List<Produto> ListaProdutoNome(String nome) throws SQLException{
+        List<Produto> listaProduto;
+        listaProduto = new ArrayList<>();
+        sql="select * from produto where nome like '%" + nome + "%'";
+        pst = Conexão.getInstance().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            listaProduto.add(new Produto(rs.getInt("codProduto"), rs.getString("TextoBreve"), rs.getString("DescritivoCompleto"), rs.getFloat("Saldo")));
+        }
+        pst.close();
+        return listaProduto;
+    }
+    
+    public Produto BuscaProdutoporCodigo(int id) throws SQLException {
+        Produto produto = null;
+        sql = "Select * from produto where codProduto=?";
+        Statement st;
+        pst = Conexão.getInstance().prepareStatement(sql);
+        pst.setInt(1, id);
+        pst.executeQuery();
+        ResultSet rs = pst.getResultSet();
+        while (rs.next()) {
+            produto = new Produto(rs.getInt("codProduto"), rs.getString("TextoBreve"), rs.getString("DescritivoCompleto"),
+                    rs.getDouble("PrecoAquisicao"), rs.getDouble("PrecoVenda"), rs.getFloat("Saldo"));
+        }
+        pst.close();
+        return produto;
+    }    
 }

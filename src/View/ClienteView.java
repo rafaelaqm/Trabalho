@@ -556,7 +556,15 @@ public class ClienteView extends javax.swing.JInternalFrame {
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
         limpaCamposCliente();
-        cliente = ClienteDAO.BuscaClienteporCodigo(Integer.parseInt(tblCliente.getValueAt(tblCliente.getSelectedRow(), 0).toString()));
+        int codcli=0;
+        int codigo = (Integer.parseInt(tblCliente.getValueAt(tblCliente.getSelectedRow(), 0).toString()));
+        System.out.println(codigo);
+        try {
+            cliente = clienteDAO.BuscaClienteporCodigo(Integer.parseInt(tblCliente.getModel().getValueAt(tblCliente.getSelectedRow(), 0).toString()));
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        txtCodigo.setText(String.valueOf(cliente.getCodigo()));
         txtNome.setText(cliente.getNome());
         txtCpf.setText(cliente.getCpf());
         txtRg.setText(cliente.getRg());

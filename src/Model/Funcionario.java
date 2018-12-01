@@ -11,6 +11,7 @@ package Model;
  */
 public class Funcionario {
     private int Codigo;
+    private String Senha;
     private String Funcao;
     private double Salario;
     private String Nome;
@@ -30,8 +31,9 @@ public class Funcionario {
     public Funcionario() {
     }
 
-    public Funcionario(int Codigo, String Funcao, double Salario, String Nome, String Rg, String Cpf, String Sexo, String Telefone, String Email, String Rua, String Numero, String Complemento, String Bairro, String Cidade, String Estado, String Cep) {
+    public Funcionario(int Codigo, String Senha, String Funcao, double Salario, String Nome, String Rg, String Cpf, String Sexo, String Telefone, String Email, String Rua, String Numero, String Complemento, String Bairro, String Cidade, String Estado, String Cep) {
         this.Codigo = Codigo;
+        this.Senha = Senha;
         this.Funcao = Funcao;
         this.Salario = Salario;
         this.Nome = Nome;
@@ -49,12 +51,34 @@ public class Funcionario {
         this.Cep = Cep;
     }
 
+
+
+    public Funcionario(int aInt, String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Funcionario(int aInt, String string, double aDouble, String string0, String string1, String string2, String string3, String string4, String string5, String string6, String string7, String string8, String string9, String string10, String string11, String string12) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Funcionario(int aInt, String string, String string0, String string1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getCodigo() {
         return Codigo;
     }
 
     public void setCodigo(int Codigo) {
         this.Codigo = Codigo;
+    }
+
+    public String getSenha() {
+        return Senha;
+    }
+
+    public void setSenha(String Senha) {
+        this.Senha = Senha;
     }
 
     public String getFuncao() {

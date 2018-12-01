@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.Funcionario;
 import javax.swing.JFrame;
 
 /**
@@ -13,10 +14,13 @@ import javax.swing.JFrame;
  */
 public class Principal extends javax.swing.JFrame {
 
-    public Principal() {
+    public Principal(Funcionario funcionario) {
         initComponents();
         this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        if (funcionario.getCpf().equals("vendedor")){
+            mniCliente.setVisible(false);
+        }
     }
 
     /**
@@ -34,6 +38,7 @@ public class Principal extends javax.swing.JFrame {
         mniCliente = new javax.swing.JMenuItem();
         mniFuncionario = new javax.swing.JMenuItem();
         mniProduto = new javax.swing.JMenuItem();
+        mniVenda = new javax.swing.JMenuItem();
         mnuSair = new javax.swing.JMenu();
         mnlSair = new javax.swing.JMenuItem();
 
@@ -76,6 +81,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mnuArquivo.add(mniProduto);
+
+        mniVenda.setText("Venda");
+        mniVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniVendaActionPerformed(evt);
+            }
+        });
+        mnuArquivo.add(mniVenda);
 
         jMenuBar1.add(mnuArquivo);
 
@@ -132,6 +145,13 @@ public class Principal extends javax.swing.JFrame {
         pnl_principal.updateUI();
     }//GEN-LAST:event_mniProdutoActionPerformed
 
+    private void mniVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVendaActionPerformed
+        VendaView venda = new VendaView();
+        pnl_principal.removeAll();
+        pnl_principal.add(venda);
+        pnl_principal.updateUI();
+    }//GEN-LAST:event_mniVendaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -140,6 +160,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniCliente;
     private javax.swing.JMenuItem mniFuncionario;
     private javax.swing.JMenuItem mniProduto;
+    private javax.swing.JMenuItem mniVenda;
     private javax.swing.JMenuItem mnlSair;
     private javax.swing.JMenu mnuArquivo;
     private javax.swing.JMenu mnuSair;

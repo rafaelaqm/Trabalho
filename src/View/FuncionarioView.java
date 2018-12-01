@@ -589,12 +589,31 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void tblFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncionarioMouseClicked
-        txtCodigo.setText(tblFuncionario.getValueAt(tblFuncionario.getSelectedRow(), 0).toString());
-        txtNome.setText(tblFuncionario.getValueAt(tblFuncionario.getSelectedRow(), 1).toString());
-        txtTelefone.setText(tblFuncionario.getValueAt(tblFuncionario.getSelectedRow(), 2).toString());
-        txtEmail.setText(tblFuncionario.getValueAt(tblFuncionario.getSelectedRow(), 3).toString());
-        txtCidade.setText(tblFuncionario.getValueAt(tblFuncionario.getSelectedRow(), 4).toString());
-        txtEstado.setText(tblFuncionario.getValueAt(tblFuncionario.getSelectedRow(), 5).toString());
+        limpaCamposFuncionario();
+        int codfun=0;
+        int codigo = (Integer.parseInt(tblFuncionario.getValueAt(tblFuncionario.getSelectedRow(), 0).toString()));
+        System.out.println(codigo);
+        try {
+            funcionario = funcionarioDAO.BuscaFuncionarioporCodigo(Integer.parseInt(tblFuncionario.getModel().getValueAt(tblFuncionario.getSelectedRow(), 0).toString()));
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        txtCodigo.setText(String.valueOf(funcionario.getCodigo()));
+        txtFuncao.setText(funcionario.getFuncao());
+        txtSalario.setText(Double.toString(funcionario.getSalario()));
+        txtNome.setText(funcionario.getNome());
+        txtCpf.setText(funcionario.getCpf());
+        txtRg.setText(funcionario.getRg());
+        txtSexo.setText(funcionario.getSexo());
+        txtTelefone.setText(funcionario.getTelefone());
+        txtEmail.setText(funcionario.getEmail());
+        txtEndereco.setText(funcionario.getRua());
+        txtNumero.setText(funcionario.getNumero());
+        txtComplemento.setText(funcionario.getComplemento());
+        txtBairro.setText(funcionario.getBairro());
+        txtCidade.setText(funcionario.getCidade());
+        txtEstado.setText(funcionario.getEstado());
+        txtCep.setText(funcionario.getCep());
         PreparaSelecaoTabela();
     }//GEN-LAST:event_tblFuncionarioMouseClicked
 

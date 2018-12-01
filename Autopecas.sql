@@ -69,3 +69,6 @@ CREATE TABLE itemvenda(
 PRIMARY KEY (codItem),
 FOREIGN KEY (codVenda) REFERENCES venda(codVenda),
 FOREIGN KEY (codProduto) REFERENCES produto(codProduto));
+
+ALTER TABLE `trabalho`.`funcionario` 
+ADD COLUMN `Senha` VARCHAR(8) NOT NULL AFTER `Cep`;

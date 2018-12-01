@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import View.Loginview;
 import View.Principal;
 
 /**
@@ -20,9 +21,8 @@ public class Autopecas {
         new Autopecas().executar();
     }
     public void executar(){
-    
-        Principal principal = new Principal();
-    
+        //Principal principal = new Principal();
+        Loginview loginview = new Loginview();
     }
     
 }

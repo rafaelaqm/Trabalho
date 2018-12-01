@@ -21,6 +21,7 @@ public class ClienteDAO {
 
     PreparedStatement pst;
     String sql;
+    Cliente cliente = new Cliente();
     
     public void salvar(Cliente cliente) throws SQLException{
         sql="insert into cliente values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -87,13 +88,28 @@ public class ClienteDAO {
         return listaClientes;
     }
     
+    public List<Cliente> ListaClienteNome(String nome) throws SQLException{
+        List<Cliente> listaClientes;
+        listaClientes = new ArrayList<>();
+        sql="select * from cliente where nome like '%" + nome + "%'";
+        pst = Conexão.getInstance().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            listaClientes.add(new Cliente(rs.getInt("codCliente"), rs.getString("Nome"), rs.getString("Telefone"),
+            rs.getString("Email"), rs.getString("Cidade"), rs.getString("Estado")));
+        }
+        pst.close();
+        return listaClientes;
+    }
+    
     /**
      *
      * @throws SQLException
      */
+    
     public Cliente BuscaClienteporCodigo(int id) throws SQLException {
         Cliente cliente = null;
-        sql = "Select * from cliente where codigo=?";
+        sql = "Select * from cliente where codCliente=?";
         Statement st;
         pst = Conexão.getInstance().prepareStatement(sql);
         pst.setInt(1, id);

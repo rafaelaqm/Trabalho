@@ -431,11 +431,11 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             tabela.setHorizontalAlignment(Element.ALIGN_CENTER);
             tabela.setWidthPercentage(100f);
             
-            PdfPCell cabecalho1 = new PdfPCell(new Paragraph("Nome",f3));
+            PdfPCell cabecalho1 = new PdfPCell(new Paragraph("Descritivo do Produto",f3));
             cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
             cabecalho1.setBorder(0);
             
-            PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Endereço",f3));
+            PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Saldo",f3));
             cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
             cabecalho1.setBorder(0);
             
@@ -448,7 +448,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
                 PdfPCell col1= new PdfPCell(p1);
                 col1.setBorder(0);
                 
-                Paragraph p2 = new Paragraph(produto.getPrecoVenda(),f5);
+                Paragraph p2 = new Paragraph(Double.toString(produto.getPrecoVenda()),f5);
                 p1.setAlignment(Element.ALIGN_JUSTIFIED);
                 PdfPCell col2= new PdfPCell(p2);
                 col2.setBorder(0);
