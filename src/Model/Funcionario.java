@@ -11,7 +11,6 @@ package Model;
  */
 public class Funcionario {
     private int Codigo;
-    private String Senha;
     private String Funcao;
     private double Salario;
     private String Nome;
@@ -27,13 +26,13 @@ public class Funcionario {
     private String Cidade;
     private String Estado;
     private String Cep;
+    private String Senha;
 
     public Funcionario() {
     }
 
-    public Funcionario(int Codigo, String Senha, String Funcao, double Salario, String Nome, String Rg, String Cpf, String Sexo, String Telefone, String Email, String Rua, String Numero, String Complemento, String Bairro, String Cidade, String Estado, String Cep) {
+    public Funcionario(int Codigo, String Funcao, double Salario, String Nome, String Rg, String Cpf, String Sexo, String Telefone, String Email, String Rua, String Numero, String Complemento, String Bairro, String Cidade, String Estado, String Cep, String Senha) {
         this.Codigo = Codigo;
-        this.Senha = Senha;
         this.Funcao = Funcao;
         this.Salario = Salario;
         this.Nome = Nome;
@@ -49,6 +48,7 @@ public class Funcionario {
         this.Cidade = Cidade;
         this.Estado = Estado;
         this.Cep = Cep;
+        this.Senha = Senha;
     }
 
 
@@ -71,14 +71,6 @@ public class Funcionario {
 
     public void setCodigo(int Codigo) {
         this.Codigo = Codigo;
-    }
-
-    public String getSenha() {
-        return Senha;
-    }
-
-    public void setSenha(String Senha) {
-        this.Senha = Senha;
     }
 
     public String getFuncao() {
@@ -201,6 +193,13 @@ public class Funcionario {
         this.Cep = Cep;
     }
 
+    public String getSenha() {
+        return Senha;
+    }
+
+    public void setSenha(String Senha) {
+        this.Senha = Senha;
+    }
 
 
     public Funcionario(int Codigo, String Nome, String Telefone, String Email, String Cidade, String Estado) {

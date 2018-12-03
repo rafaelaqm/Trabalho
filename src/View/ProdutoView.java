@@ -393,10 +393,22 @@ public class ProdutoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
-        txtCodigo.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
-        txtTextoBreve.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 1).toString());
-        txtSaldo.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 2).toString());
-        PreparaSelecaoTabela();
+        limpaCamposProduto();
+        int codprod=0;
+        int codigo = (Integer.parseInt(tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString()));
+        System.out.println(codigo);
+        try {
+            produto = produtoDAO.BuscaProdutoporCodigo(Integer.parseInt(tblProduto.getModel().getValueAt(tblProduto.getSelectedRow(), 0).toString()));
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        txtCodigo.setText(String.valueOf(produto.getCodigo()));
+        txtTextoBreve.setText(produto.getTextoBreve());
+        txtDescritivoCompleto.setText(produto.getDescritivoCompleto());
+        txtPrecoAquisicao.setText(String.valueOf(produto.getPrecoAquisicao()));
+        txtPrecoVenda.setText(String.valueOf(produto.getPrecoVenda()));
+        txtSaldo.setText(String.valueOf(produto.getSaldo()));
+        PreparaSelecaoTabela();       
     }//GEN-LAST:event_tblProdutoMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

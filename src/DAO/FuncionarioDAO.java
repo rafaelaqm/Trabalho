@@ -21,7 +21,7 @@ public class FuncionarioDAO {
     String sql;
     
     public void salvar(Funcionario funcionario) throws SQLException{
-        sql="insert into funcionario values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql="insert into funcionario values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         pst=Conexão.getInstance().prepareStatement(sql);
         pst.setInt(1, 0);
         pst.setString(2, funcionario.getFuncao());
@@ -39,6 +39,7 @@ public class FuncionarioDAO {
         pst.setString(14, funcionario.getCidade());
         pst.setString(15, funcionario.getEstado());
         pst.setString(16, funcionario.getCep());
+        pst.setString(17, funcionario.getSenha());
         pst.execute();
         pst.close();
     }
@@ -70,6 +71,7 @@ public class FuncionarioDAO {
         pst.setString(14, funcionario.getEstado());
         pst.setString(15, funcionario.getCep());
         pst.setInt(16, funcionario.getCodigo());
+        pst.setString(17, funcionario.getSenha());
         
         System.out.println(pst);
         pst.execute();
@@ -114,7 +116,7 @@ public class FuncionarioDAO {
             funcionario = new Funcionario(rs.getInt("codFuncionario"), rs.getString("Funcao"), rs.getDouble("Salario"), rs.getString("Nome"), rs.getString("Rg"), rs.getString("Cpf"),
                     rs.getString("Sexo"), rs.getString("Telefone"), rs.getString("Email"), rs.getString("Rua"),
                     rs.getString("Numero"), rs.getString("Complemento"), rs.getString("Bairro"), rs.getString("Cidade"),
-                    rs.getString("Estado"), rs.getString("Cep"));
+                    rs.getString("Estado"), rs.getString("Cep"), rs.getString("Senha"));
         }
         pst.close();
         return funcionario;

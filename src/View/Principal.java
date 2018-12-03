@@ -14,13 +14,13 @@ import javax.swing.JFrame;
  */
 public class Principal extends javax.swing.JFrame {
 
-    public Principal(Funcionario funcionario) {
+    public Principal() {
         initComponents();
         this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        if (funcionario.getCpf().equals("vendedor")){
+        /*if (funcionario.getCpf().equals("vendedor")){
             mniCliente.setVisible(false);
-        }
+        }*/
     }
 
     /**

@@ -90,6 +90,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         txtCidade.setText("");
         txtEstado.setText("");
         txtCep.setText("");
+        txtSenha.setText("");
     }
 
     /**
@@ -138,6 +139,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         txtFuncao = new javax.swing.JTextField();
         txtSalario = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -233,6 +236,10 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
         jLabel17.setText("Salário");
 
+        jLabel18.setText("Senha");
+
+        txtSenha.setEnabled(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -293,7 +300,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(409, 409, 409)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(225, 225, 225)))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -334,7 +345,10 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel17)
-                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16)
                         .addComponent(txtFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -473,8 +487,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (txtNome.getText().isEmpty() || txtCpf.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Preencha pelo menos o Nome e CPF");
+        if (txtNome.getText().isEmpty() || txtCpf.getText().isEmpty() || txtSenha.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha pelo menos o Nome, CPF e Senha");
             txtNome.requestFocusInWindow();
         } else if (txtCodigo.getText().isEmpty()){
             funcionario = new Funcionario();
@@ -493,6 +507,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             funcionario.setCidade(txtCidade.getText());
             funcionario.setEstado(txtEstado.getText());
             funcionario.setCep(txtCep.getText());
+            funcionario.setSenha(txtSenha.getText());
             try {
                 funcionarioDAO.salvar(funcionario);
                 System.out.println(funcionario.getNome());
@@ -521,6 +536,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             funcionario.setCidade(txtCidade.getText());
             funcionario.setEstado(txtEstado.getText());
             funcionario.setCep(txtCep.getText());
+            funcionario.setSenha(txtSenha.getText());
             try {
                 funcionarioDAO.alterar(funcionario);
 
@@ -580,6 +596,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             funcionario.setEstado(txtEstado.getText());
             funcionario.setCep(txtCep.getText());
             funcionario.setCodigo(Integer.parseInt(txtCodigo.getText()));
+            funcionario.setSenha(txtSenha.getText());
             try {
                 funcionarioDAO.alterar(funcionario);
             } catch (SQLException ex) {
@@ -614,6 +631,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         txtCidade.setText(funcionario.getCidade());
         txtEstado.setText(funcionario.getEstado());
         txtCep.setText(funcionario.getCep());
+        txtSenha.setText(funcionario.getSenha());
         PreparaSelecaoTabela();
     }//GEN-LAST:event_tblFuncionarioMouseClicked
 
@@ -724,6 +742,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         txtCidade.setEnabled(true);
         txtEstado.setEnabled(true);
         txtCep.setEnabled(true);
+        txtSenha.setEnabled(true);
     }
     
     public void DesativaCampos(){
@@ -741,7 +760,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         txtBairro.setEnabled(false);
         txtCidade.setEnabled(false);
         txtEstado.setEnabled(false);
-        txtCep.setEnabled(false);        
+        txtCep.setEnabled(false);
+        txtSenha.setEnabled(false);
     }
     
     public void PreparaNovo(){
@@ -807,6 +827,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -833,6 +854,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtRg;
     private javax.swing.JTextField txtSalario;
+    private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtSexo;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
