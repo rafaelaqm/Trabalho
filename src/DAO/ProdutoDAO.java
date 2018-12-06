@@ -91,7 +91,7 @@ public class ProdutoDAO {
         ResultSet rs = pst.getResultSet();
         while (rs.next()) {
             produto = new Produto(rs.getInt("codProduto"), rs.getString("TextoBreve"), rs.getString("DescritivoCompleto"),
-                    rs.getDouble("PrecoAquisicao"), rs.getDouble("PrecoVenda"), rs.getFloat("Saldo"));
+                    rs.getFloat("PrecoAquisicao"), rs.getFloat("PrecoVenda"), rs.getFloat("Saldo"));
         }
         pst.close();
         return produto;

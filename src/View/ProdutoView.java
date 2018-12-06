@@ -44,7 +44,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             dados[i][0] = String.valueOf(produto.getCodigo());
             dados[i][1] = produto.getTextoBreve();
             dados[i][2] = produto.getDescritivoCompleto();
-            dados[i][3] = String.valueOf(produto.getSaldo());
+            dados[i][3] = String.valueOf((produto.getPrecoVenda()));
             i++;
         }
         String tituloColuna[] = {"Código", "Texto Breve", "Descritivo Completo", "Saldo"};
@@ -431,7 +431,7 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             Font f4 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
             Font f5 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
             
-            Paragraph titulo1 = new Paragraph("Universidade do Estado de Minas Gerais", f2);
+            Paragraph titulo1 = new Paragraph("Universidade do Estado de Minas Gerais\n\n", f2);
             titulo1.setAlignment(Element.ALIGN_CENTER);
             titulo1.setSpacingAfter(10);
             

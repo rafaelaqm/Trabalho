@@ -601,7 +601,7 @@ public class ClienteView extends javax.swing.JInternalFrame {
             Font f4 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
             Font f5 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
             
-            Paragraph titulo1 = new Paragraph("Universidade do Estado de Minas Gerais", f2);
+            Paragraph titulo1 = new Paragraph("Universidade do Estado de Minas Gerais\n\n", f2);
             titulo1.setAlignment(Element.ALIGN_CENTER);
             titulo1.setSpacingAfter(10);
             

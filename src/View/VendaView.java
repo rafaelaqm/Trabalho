@@ -357,7 +357,7 @@ public class VendaView extends javax.swing.JInternalFrame {
         );
 
         setClosable(true);
-        setPreferredSize(new java.awt.Dimension(1024, 509));
+        setPreferredSize(new java.awt.Dimension(1024, 512));
 
         btnFinalizarVenda.setText("Finalizar Venda");
         btnFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
