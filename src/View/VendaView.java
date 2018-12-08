@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.*;
 
@@ -20,7 +21,7 @@ import javax.swing.table.*;
 public class VendaView extends javax.swing.JInternalFrame {
     Venda venda;
     VendaDAO vendaDAO;
-    VendaItens VendaItens;
+    VendaItens VendaItens = new VendaItens();;
     Produto produto;
     ProdutoDAO produtoDAO;
     Funcionario funcionario;
@@ -112,7 +113,8 @@ public class VendaView extends javax.swing.JInternalFrame {
         for (Produto produto: listaProdutos){
             dados[i][0]=String.valueOf(produto.getCodigo());
             dados[i][1]=produto.getDescritivoCompleto();
-            dados[i][2]=String.valueOf(produto.getPrecoVenda());
+            dados[i][2]= String.valueOf(produto.getPrecoVenda());
+            System.out.println(String.valueOf(produto.getPrecoVenda()).toString()+"Teste");
             dados[i][3]=String.valueOf(produto.getSaldo());
             i++;
         }
@@ -150,7 +152,8 @@ public class VendaView extends javax.swing.JInternalFrame {
         }
         
         for (Funcionario funcionario : listaVendedores){
-            cboVendedor.addItem(funcionario.getNome());
+            cboVendedor.addItem(funcionario);
+            //cboVendedor.addItem(funcionario.getNome());
         }
     }
 
@@ -681,10 +684,18 @@ public class VendaView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRemoverItemActionPerformed
 
     private void btnFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarVendaActionPerformed
+        funcionario = (Funcionario) cboVendedor.getSelectedItem();
+        
+        vendaDAO = new VendaDAO();
         venda.setCliente(cliente);
         venda.setFuncionario(funcionario);
         venda.setTotalVenda(Float.valueOf(lblTotalVenda.getText()));
-        //vendaDAO.salvar(venda);
+        try {
+            vendaDAO.salvar(venda);
+            JOptionPane.showMessageDialog(null, "Venda Concluída");
+        } catch (SQLException ex) {
+            Logger.getLogger(VendaView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnFinalizarVendaActionPerformed
 
     private void txtDescritivoBuscaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtDescritivoBuscaCaretUpdate
@@ -717,7 +728,7 @@ public class VendaView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRemoverItem;
     private javax.swing.JButton btnSelecionarCliente;
     private javax.swing.JButton btnSelecionarProduto;
-    private javax.swing.JComboBox<String> cboVendedor;
+    private javax.swing.JComboBox<Object> cboVendedor;
     private javax.swing.JDialog diagBuscaCliente;
     private javax.swing.JDialog diagBuscaProduto;
     private javax.swing.JLabel jLabel1;

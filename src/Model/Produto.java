@@ -36,6 +36,15 @@ public class Produto {
         this.Saldo = Saldo;
     }
 
+    public Produto(int Codigo, String TextoBreve, String DescritivoCompleto, double PrecoVenda, float Saldo) {
+        this.Codigo = Codigo;
+        this.TextoBreve = TextoBreve;
+        this.DescritivoCompleto = DescritivoCompleto;
+        this.PrecoVenda = PrecoVenda;
+        this.Saldo = Saldo;
+    }
+
+
     public int getCodigo() {
         return Codigo;
     }

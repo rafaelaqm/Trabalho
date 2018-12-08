@@ -62,7 +62,7 @@ public class ProdutoDAO {
         pst = Conexão.getInstance().prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
-            listaProduto.add(new Produto(rs.getInt("codProduto"), rs.getString("TextoBreve"), rs.getString("DescritivoCompleto"), rs.getFloat("Saldo")));
+            listaProduto.add(new Produto(rs.getInt("codProduto"), rs.getString("TextoBreve"), rs.getString("DescritivoCompleto"), rs.getDouble("PrecoVenda"), rs.getFloat("Saldo")));
         }
         pst.close();
         return listaProduto;

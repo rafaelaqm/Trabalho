@@ -436,10 +436,10 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             titulo1.setSpacingAfter(10);
             
             Paragraph titulo2 = new Paragraph("Relatorio de Produtos", f1);
-            titulo1.setAlignment(Element.ALIGN_CENTER);
-            titulo1.setSpacingAfter(0);
+            titulo2.setAlignment(Element.ALIGN_CENTER);
+            titulo2.setSpacingAfter(0);
             
-            PdfPTable tabela = new PdfPTable(new float[]{0,40f, 0,60f});
+            PdfPTable tabela = new PdfPTable(new float[]{0.40f, 0.60f});
             tabela.setHorizontalAlignment(Element.ALIGN_CENTER);
             tabela.setWidthPercentage(100f);
             
@@ -448,8 +448,8 @@ public class ProdutoView extends javax.swing.JInternalFrame {
             cabecalho1.setBorder(0);
             
             PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Saldo",f3));
-            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
-            cabecalho1.setBorder(0);
+            cabecalho2.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho2.setBorder(0);
             
             tabela.addCell(cabecalho1);
             tabela.addCell(cabecalho2);

@@ -22,12 +22,11 @@ public class VendaDAO {
     
     public void salvar(Venda venda) throws SQLException{
         int codVenda=0;
-        sql = "insert into venda values(?,?,?,?)";
+        sql = "insert into venda(codCliente, codVendedor, totalVenda) values(?,?,?)";
         pst = Conexão.getInstance().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        pst.setInt(1, 0);
-        pst.setInt(2, venda.getCliente().getCodigo());
-        pst.setInt(3, venda.getFuncionario().getCodigo());
-        pst.setFloat(4, venda.getTotalVenda());
+        pst.setInt(1, venda.getCliente().getCodigo());
+        pst.setInt(2, venda.getFuncionario().getCodigo());
+        pst.setFloat(3, venda.getTotalVenda());
         pst.executeUpdate();
         ResultSet rs = pst.getGeneratedKeys();
         while(rs.next()){

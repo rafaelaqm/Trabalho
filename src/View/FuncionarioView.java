@@ -344,11 +344,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel18)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel17)
-                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16)
                         .addComponent(txtFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -660,10 +660,10 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             titulo1.setSpacingAfter(10);
             
             Paragraph titulo2 = new Paragraph("Relatorio de Funcionarios", f1);
-            titulo1.setAlignment(Element.ALIGN_CENTER);
-            titulo1.setSpacingAfter(0);
+            titulo2.setAlignment(Element.ALIGN_CENTER);
+            titulo2.setSpacingAfter(0);
             
-            PdfPTable tabela = new PdfPTable(new float[]{0,40f, 0,60f});
+            PdfPTable tabela = new PdfPTable(new float[]{0.40f, 0.60f});
             tabela.setHorizontalAlignment(Element.ALIGN_CENTER);
             tabela.setWidthPercentage(100f);
             
@@ -671,9 +671,9 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
             cabecalho1.setBorder(0);
             
-            PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Endereço",f3));
-            cabecalho1.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
-            cabecalho1.setBorder(0);
+            PdfPCell cabecalho2 = new PdfPCell(new Paragraph("Cidade/Estado",f3));
+            cabecalho2.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+            cabecalho2.setBorder(0);
             
             tabela.addCell(cabecalho1);
             tabela.addCell(cabecalho2);
@@ -684,8 +684,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                 PdfPCell col1= new PdfPCell(p1);
                 col1.setBorder(0);
                 
-                Paragraph p2 = new Paragraph(funcionario.getRua() + ", " + funcionario.getNumero() + "; " + funcionario.getBairro() +
-                        " - " + funcionario.getCidade() + "/" + funcionario.getEstado(),f5);
+                Paragraph p2 = new Paragraph(funcionario.getCidade() + "/" + funcionario.getEstado(),f5);
                 p1.setAlignment(Element.ALIGN_JUSTIFIED);
                 PdfPCell col2= new PdfPCell(p2);
                 col2.setBorder(0);

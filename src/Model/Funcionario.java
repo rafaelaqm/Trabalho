@@ -210,4 +210,10 @@ public class Funcionario {
         this.Cidade = Cidade;
         this.Estado = Estado;
     }
+
+    @Override
+    public String toString() {
+        return this.Nome; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
